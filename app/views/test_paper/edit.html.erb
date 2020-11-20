@@ -1,0 +1,8 @@
+<h1 class="center"> Edit Test paper Here  </h1>
+<div class="row">
+  <% if @has_error  %>
+    <p> <%= @error_msg %></p>
+  <%else %>
+    <%= render partial: "/test_paper/partial/form", locals:{test_info:@test_info, error_msg: @error_msg, has_error: @has_error, action:"/testpaper/update/#{@test_info.id}", all_questions: @all_questions} %>
+  <%end %>
+</div>

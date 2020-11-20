@@ -1,0 +1,5 @@
+<h1 class="center"> Create new Test Paper </h1>
+<div class="row">
+    <p><%= @error %></p>
+    <%= render partial: "/test_paper/partial/form", locals:{test_info:@test_info, error_msg: @error_msg, has_error: @has_error, action:"/testpaper/new", all_questions: @all_questions} %>
+</div>

@@ -1,0 +1,5 @@
+<h1 class="center"> Create new Question </h1>
+<div class="row">
+    <p><%= @error %></p>
+    <%= render partial: "/question/partial/form", locals:{question_info:@question_info, error_msg: @error_msg, has_error: @has_error, method:"POST", action:@action} %>
+</div>

@@ -1,0 +1,32 @@
+<h1 class="center">
+  All Questions
+  <a href="/testpaper/new" class="btn btn-success btn-sm" tabindex="-1" role="button" aria-disabled="true">Add New</a>
+</h1>
+
+<div class="row">
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">#ID</th>
+      <th scope="col">Test Details</th>
+      <th scope="col">No Of Questions</th>
+      <th scope="col">Time Allowed</th>
+      <th scope="col">Status</th>
+      <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @test_papers.each do |q| %>
+      <tr>
+        <th scope="row"><%= q[:id] %></th>
+        <td><%= q[:test_details] %></td>
+        <td><%= render_pill_badges(q[:no_of_questions].to_s).html_safe%></td>
+        <td><%= q[:time_allowed] %></td>
+        <td><%= render_pill_badges(q[:status]).html_safe %></td>
+        <td><a href="#" class="btn btn-danger btn-sm" tabindex="-1" role="button" aria-disabled="true">Delete</a></td>
+        <td><a href="edit/<%= q[:id] %>" class="btn btn-danger btn-sm" tabindex="-1" role="button" aria-disabled="true">Edit</a></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>

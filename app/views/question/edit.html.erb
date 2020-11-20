@@ -1,0 +1,8 @@
+<h1 class="center"> Edit Question Here  </h1>
+<div class="row">
+  <% if @has_error  %>
+    <p> <%= @error_msg %></p>
+  <%else %>
+    <%= render partial: "/question/partial/form", locals:{question_info:@question_info, error_msg: @error_msg, has_error: @has_error, method:"PUT", action:@action}  %>
+  <%end %>
+</div>

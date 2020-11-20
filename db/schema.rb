@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_13_113205) do
+ActiveRecord::Schema.define(version: 2020_11_20_064227) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,4 +30,38 @@ ActiveRecord::Schema.define(version: 2020_11_13_113205) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "submissions", force: :cascade do |t|
+    t.bigint "test_papers_id"
+    t.bigint "users_id"
+    t.integer "time_taken"
+    t.string "status"
+    t.integer "total"
+    t.integer "result"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["test_papers_id"], name: "index_submissions_on_test_papers_id"
+    t.index ["users_id"], name: "index_submissions_on_users_id"
+  end
+
+  create_table "test_papers", force: :cascade do |t|
+    t.integer "time_allowed"
+    t.string "test_details"
+    t.bigint "questions_id", array: true
+    t.boolean "status", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["questions_id"], name: "index_test_papers_on_questions_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email"
+    t.string "name"
+    t.bigint "test_papers_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["test_papers_id"], name: "index_users_on_test_papers_id"
+  end
+
+  add_foreign_key "submissions", "test_papers", column: "test_papers_id"
+  add_foreign_key "users", "test_papers", column: "test_papers_id"
 end
