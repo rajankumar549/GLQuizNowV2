@@ -57,12 +57,11 @@ class TestPaper < ApplicationRecord
     questions.each do |q|
       no_of_questions = 0
       no_of_questions = q.questions_id.length unless q.questions_id.nil?
-      result << {:test_details => q.test_details,
-                 :id => q.id,
-                 :status => ApplicationHelper.status_str(q.status),
-                 :no_of_questions => no_of_questions,
-                 :time_allowed => "#{q.time_allowed} min",
-      }
+      result << { test_details: q.test_details,
+                  id: q.id,
+                  status: ApplicationHelper.status_str(q.status),
+                  no_of_questions: no_of_questions,
+                  time_allowed: "#{q.time_allowed} min" }
     end
     result
   end

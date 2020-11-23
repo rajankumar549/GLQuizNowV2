@@ -42,7 +42,7 @@ class Question < ApplicationRecord
   end
 
   def self.get_all_by_id(ids = [])
-    return [[],"Unexpected Zero Question associated with this test."] if ids.nil? || ids.empty?
+    return [[], 'Unexpected Zero Question associated with this test.'] if ids.nil? || ids.empty?
 
     [process_question(where(id: ids).order(:id)), nil]
   end
@@ -74,14 +74,13 @@ class Question < ApplicationRecord
   def self.process_question(questions)
     result = []
     questions.each do |q|
-      result << {statement: q.statement,
-                 id: q.id,
-                 status: ApplicationHelper.status_str(q.status),
-                 weightage: q.weightage,
-                 weightage_str: q.weightage.to_s + " pt",
-                 options: q.options,
-                 correct: q.correct
-      }
+      result << { statement: q.statement,
+                  id: q.id,
+                  status: ApplicationHelper.status_str(q.status),
+                  weightage: q.weightage,
+                  weightage_str: q.weightage.to_s + ' pt',
+                  options: q.options,
+                  correct: q.correct }
     end
     result
   end

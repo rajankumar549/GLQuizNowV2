@@ -1,29 +1,38 @@
 class Submission < ApplicationRecord
-  def self.start_test_submission(testpaper = TestPaper, user = User)
-    return [nil,nil, "Invalid Test info or User found"] if testpaper.nil? || user.nil?
-    questions, err = Question.get_all_by_id(testpaper.questions_id)
-    return [nil, nil, "Zero Question found for the test #{testpaper.id}"] unless err.nil?
+  def self.start_test_submission(test_paper = TestPaper, user = User)
+    return [nil, nil, 'Invalid Test info or User found'] if test_paper.nil? || user.nil?
+
+    questions, err = Question.get_all_by_id(test_paper.questions_id)
+    return [nil, nil, "Zero Question found for the test #{test_paper.id}"] unless err.nil?
 
     total_marks = 0
     questions.each do |q|
       total_marks += q[:weightage].to_i if q[:status]
     end
 
-    sub = where({ test_papers_id: testpaper.id, users_id: user.id }).first
-    sub = create({ test_papers_id: testpaper.id,users_id: user.id,status:"pending",total:total_marks,result:0 }) if sub.nil?
-    return [sub,questions, "This Test Aready been Submitted"] unless sub.status == "pending"
+    sub = where({ test_papers_id: test_paper.id, users_id: user.id }).first
+    if sub.nil?
+      sub = create({ test_papers_id: test_paper.id,
+                     users_id: user.id,
+                     status: 'pending',
+                     total: total_marks,
+                     result: 0 })
+    end
+
+    return [sub,questions, 'This Test Already been Submitted'] unless sub.status == 'pending'
 
     [sub, questions, nil]
   end
 
   def self.complete(test_paper = TestPaper, user = User, params = {})
-    return [nil, "Invalid Test info or User found"] if test_paper.nil? || user.nil?
+    return [nil, 'Invalid Test info or User found'] if test_paper.nil? || user.nil?
 
     test_paper = TestPaper.new(test_paper) unless test_paper.nil?
     user = User.new(user) unless user.nil?
 
-    questions, err = Question.get_all_by_id(test_paper.questions_id)
+    questions, err = Question.get_all_by_id test_paper.questions_id
     return [nil, "Zero Question found for the test #{test_paper.id}"] unless err.nil?
+
     question_to_id = {}
     questions.each do |q|
       question_to_id[q[:id]] = q
@@ -39,12 +48,10 @@ class Submission < ApplicationRecord
 
     sub = where({ test_papers_id: test_paper.id, users_id: user.id }).first
     sub.result = total_marks
-    sub.status = "completed"
-    return [sub, "Unable to submitted test. Try again !!!"] unless sub.save!
+    sub.status = 'completed'
+    return [sub, 'Unable to submitted test. Try again !!!'] unless sub.save!
+
     [sub, nil]
   end
 
-  def time_left
-   ((Time.now - self.created_at) * 24 * 60).to_i
-  end
 end

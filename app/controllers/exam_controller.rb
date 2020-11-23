@@ -15,9 +15,10 @@ class ExamController < ApplicationController
     @user_info, @error_msg = User.get_by_email_and_test_id params
     return render unless @error_msg.nil? || !@user_info.nil?
 
-    sub,@all_questions, @error_msg = Submission.start_test_submission(@test_info, @user_info)
+    _, @all_questions, @error_msg = Submission.start_test_submission(@test_info, @user_info)
+
     return render unless @error_msg.nil?
-    #@time_left = sub.time_left
+
     session[:user] = @user_info
     session[:test_info] = @test_info
     render
@@ -25,27 +26,24 @@ class ExamController < ApplicationController
   end
 
   def login_candidate
-    @action = "/exam/start"
+    @action = '/exam/start'
     session[:user] = nil
     session[:test_info] = nil
     render
   end
 
-
   def result
 
     return redirect_to '/exam/candidate/login' if session[:user].nil? || session[:test_info].nil?
-    @sub, @error_msg = Submission.complete(session[:test_info],session[:user],params)
+
+    @sub, @error_msg = Submission.complete(session[:test_info],session[:user], params)
 
     @test_info = TestPaper.new(session[:test_info])
     @user_info = User.new(session[:user])
 
     return redirect_to '/exam/candidate/login' unless @error_msg.nil?
 
-    render "evaluate"
+    render 'evaluate'
   end
 
-  def result2
-    render "evaluate"
-  end
 end
