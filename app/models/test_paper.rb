@@ -41,7 +41,7 @@ class TestPaper < ApplicationRecord
   end
 
   def self.get_test_by_id?(id)
-    return nil, 'Invalid Question ID' if id.nil? || id.to_i <= 0
+    return nil, 'Invalid Test ID' if id.nil? || id.to_i <= 0
 
     begin
       find(id)

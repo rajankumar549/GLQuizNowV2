@@ -5,18 +5,18 @@
   </div>
 <%else %>
 <h1 class="center">
-  <%= @test_info.test_details %>
+  <%= @test_info.test_details %> <small><%= @time_left.to_s  %> min left</small>
 </h1>
     <form class="col-sm-12" action="<%= @action %>" method="post" >
     <% @all_questions.each do |q,idx1| %>
       <div class="card mb-3">
         <div class="card-body">
-          <h5 class="card-title">Question: <%= idx1.to_s %> &nbsp; <small>Marks : <%= render_pill_badges(q[:weightage]).html_safe %></small></h5>
+          <h5 class="card-title">Question: <%= idx1.to_s %> &nbsp; <small>Marks : <%= render_pill_badges(q[:weightage_str]).html_safe %></small></h5>
           <hr/>
           <p><%= q[:statement] %></p>
           <% q[:options].each.with_index do |opt, idx| %>
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="opt[<%=q[:id]%>]" id="ques-<%=q[:id]%>" value="<%= idx%>" >
+                <input class="form-check-input" type="radio" name="opt[<%=q[:id]%>]" id="ques-<%=q[:id]%>" value="<%= idx + 1%>" required >
                 <label class="form-check-label" for="exampleRadios1">
                   <%=opt%>
                 </label>

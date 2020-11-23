@@ -19,7 +19,7 @@
       <tr>
         <th scope="row"><%= q[:id] %></th>
         <td><%= q[:statement] %></td>
-        <td><%= render_pill_badges(q[:weightage]).html_safe%></td>
+        <td><%= render_pill_badges(q[:weightage_str]).html_safe%></td>
         <td><%= render_pill_badges(q[:status]).html_safe %></td>
         <td><a href="#" class="btn btn-danger btn-sm" tabindex="-1" role="button" aria-disabled="true">Delete</a></td>
         <td><a href="edit/<%= q[:id] %>" class="btn btn-danger btn-sm" tabindex="-1" role="button" aria-disabled="true">Edit</a></td>

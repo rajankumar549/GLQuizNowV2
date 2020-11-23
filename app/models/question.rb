@@ -77,8 +77,10 @@ class Question < ApplicationRecord
       result << {statement: q.statement,
                  id: q.id,
                  status: ApplicationHelper.status_str(q.status),
-                 weightage: q.weightage.to_s + " pt",
-                 options: q.options
+                 weightage: q.weightage,
+                 weightage_str: q.weightage.to_s + " pt",
+                 options: q.options,
+                 correct: q.correct
       }
     end
     result

@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   #root "application#hello"
-  root 'question#list'
+  root 'exam#login_candidate'
   get 'question/new', to: 'question#new'
   post 'question/new', to: 'question#add_question'
   get 'question/list', to: 'question#list'
@@ -15,6 +15,10 @@ Rails.application.routes.draw do
   get 'testpaper/edit/:id', to: 'test_paper#edit'
   post 'testpaper/update/:id', to: 'test_paper#update'
 
-  get 'exam/start/:id', to:'exam#show_exam'
-  post 'exam/evaluate/:id', to:'exam#evaluate'
+  post 'exam/start', to: 'exam#show_exam'
+  get 'exam/start', to: 'exam#show_exam'
+
+  post 'exam/result/:id', to: 'exam#result'
+  get 'exam/result/:id', to: 'exam#result'
+  get 'exam/candidate/login', to: 'exam#login_candidate'
 end
